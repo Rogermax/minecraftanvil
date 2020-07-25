@@ -1,0 +1,28 @@
+<ng-container *ngIf="enchant">
+    <div class="container">
+        <span class="left big-text">{{enchant.type}}</span>
+        <span class="right"><label>Prior Work Penalty</label><input id="target_penalty" type="number" placeholder="0"
+                [(ngModel)]="enchant.penalty" min="0" max="6" /></span>
+    </div>
+    <div class="container type">
+        <select class="big-text" [(ngModel)]="currentSelected.type" (ngModelChange)="enchantTypeChange()">
+            <option [value]="enchant.type" *ngFor="let enchant of availableEnchantList">
+                {{enchant.type}}</option>
+        </select>
+        <input class="enchant_lv" type="number" *ngIf="currentSelected.type != null" [(ngModel)]="currentSelected.level"
+            min="1" [max]="currentSelected.max">
+    </div>
+    <div class="container ">
+        <button [disabled]="!currentSelected" class="addEnchantBtn" (click)="addEnchantButton()">
+            Add Enchantment
+        </button>
+    </div>
+
+    <div class="container enchant">
+        <div *ngFor="let enchant of enchant.enchants; let i = index" class="container type">
+            <input disabled class="enchant_name" [value]="enchant.type">
+            <input disabled class="enchant_lv" [value]="enchant.level" />
+            <button class="enchant_remove removeEnchantBtn" (click)="removeEnchantButton(enchant)">X</button>
+        </div>
+    </div>
+</ng-container>
