@@ -1,4 +1,4 @@
-import { EnchantType, Enchant, EnchantableType } from "../models/enchanted.book";
+import { EnchantType, Enchant, EnchantableType, Enchantable } from "../models/enchanted.book";
 
 export const ENCHANT_TYPES: EnchantableType[] = [
     EnchantableType.Sword,
@@ -420,3 +420,214 @@ export const ENCHANT_LIST: Enchant[] = [
         mulBook: 2
     }
 ];
+
+
+export const PERFECT_HELMET_ENCHANTABLES: Enchantable[] = [
+    {
+      enchants: [{
+        type: EnchantType.Protection,
+        level: 4,
+        max: 4,
+        mulBook: 1,
+        mulItem: 1
+      }
+    ],
+      isEnchanted: true,
+      penalty: 0,
+      type: EnchantableType.Book
+    },
+    
+    {
+      enchants: [{
+        type: EnchantType.Mending,
+        max: 1,
+        level: 1,
+        mulItem: 4,
+        mulBook: 2
+      }
+    ],
+      isEnchanted: true,
+      penalty: 0,
+      type: EnchantableType.Book
+    },
+    {
+      enchants: [
+        {
+          type: EnchantType.Unbreaking,
+          max: 3,
+          level: 3,
+          mulItem: 2,
+          mulBook: 1
+        }
+    ],
+      isEnchanted: true,
+      penalty: 0,
+      type: EnchantableType.Book
+    },
+    
+    {
+      enchants: [
+        {
+          type: EnchantType.Thorns,
+            level: 3,
+            max: 3,
+            mulItem: 8,
+            mulBook: 4
+        },
+    ],
+      isEnchanted: true,
+      penalty: 0,
+      type: EnchantableType.Book
+    },
+    
+    {
+      enchants: [
+        {
+          type: EnchantType.Aqua_Affinity,
+            max: 1,
+            level: 1,
+            mulItem: 4,
+            mulBook: 2
+        },
+    ],
+      isEnchanted: true,
+      penalty: 0,
+      type: EnchantableType.Book
+    },
+    
+    {
+      enchants: [
+        {
+          type: EnchantType.Respiration,
+            max: 3,
+            level: 3,
+            mulItem: 4,
+            mulBook: 2
+        },
+    ],
+      isEnchanted: true,
+      penalty: 0,
+      type: EnchantableType.Book
+    },
+    
+    {
+      enchants: [],
+      isEnchanted: true,
+      penalty: 0,
+      type: EnchantableType.Helmet
+    },
+    
+  ]
+
+export const PERFECT_SWORD_ENCHANTABLES: Enchantable[] = [
+    {
+      enchants: [{
+        type: EnchantType.Sharpness,
+          max: 5,
+          level: 5,
+          mulItem: 1,
+          mulBook: 1
+      }
+    ],
+      isEnchanted: true,
+      penalty: 0,
+      type: EnchantableType.Book
+    },
+    
+    {
+      enchants: [{
+        type: EnchantType.Mending,
+        max: 1,
+        level: 1,
+        mulItem: 4,
+        mulBook: 2
+      }
+    ],
+      isEnchanted: true,
+      penalty: 0,
+      type: EnchantableType.Book
+    },
+    {
+      enchants: [
+        {
+          type: EnchantType.Unbreaking,
+          max: 3,
+          level: 3,
+          mulItem: 2,
+          mulBook: 1
+        }
+    ],
+      isEnchanted: true,
+      penalty: 0,
+      type: EnchantableType.Book
+    },
+    
+    {
+      enchants: [
+        {
+          type: EnchantType.Looting,
+            max: 3,
+            level: 3,
+            mulItem: 4,
+            mulBook: 2
+        },
+    ],
+      isEnchanted: true,
+      penalty: 0,
+      type: EnchantableType.Book
+    },
+    
+    {
+      enchants: [
+        {
+          type: EnchantType.Fire_Aspect,
+            max: 2,
+            level: 2,
+            mulItem: 4,
+            mulBook: 2
+        },
+    ],
+      isEnchanted: true,
+      penalty: 0,
+      type: EnchantableType.Book
+    },
+
+    
+    {
+      enchants: [
+        {
+          type: EnchantType.Sweeping_Edge,
+            max: 3,
+            level: 3,
+            mulItem: 4,
+            mulBook: 2
+        },
+    ],
+      isEnchanted: true,
+      penalty: 0,
+      type: EnchantableType.Book
+    },
+    
+    {
+      enchants: [
+        {
+          type: EnchantType.Knockback,
+            max: 2,
+            level: 2,
+            mulItem: 2,
+            mulBook: 1
+        },
+    ],
+      isEnchanted: true,
+      penalty: 0,
+      type: EnchantableType.Book
+    },
+
+    {
+      enchants: [],
+      isEnchanted: true,
+      penalty: 0,
+      type: EnchantableType.Sword
+    },
+    
+  ]

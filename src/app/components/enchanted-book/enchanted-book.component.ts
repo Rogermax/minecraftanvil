@@ -3,6 +3,8 @@ import { Enchantable, EnchantableType, Enchant, EnchantType } from 'src/app/mode
 import { APPLICABLE_ENCHANT, ENCHANT_LIST, CONFLICT_ENCHANT } from 'src/app/db/enchants';
 import { FormControl, Validators } from '@angular/forms';
 import { findCost } from 'src/app/utils/costUtils';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-enchanted-book',
@@ -17,63 +19,65 @@ export class EnchantedBookComponent implements OnInit, OnChanges {
     penalty: 0,
     type: EnchantableType.Book
   }
-  @Input() conflictEnchantTypes: EnchantType[] = []
+  @Input() conflictEnchantTypes: EnchantType[] = [];
 
   @Output() addEnchant = new EventEmitter<EnchantType>();
   @Output() removeEnchant = new EventEmitter<EnchantType>();
 
-  level = new FormControl(1, [Validators.min(1),Validators.max(1)]);
+  myControl = new FormControl();
+  filteredOptions: Observable<string[]>;
 
-  currentSelected: Enchant = {
-    max: 1, // ha recalcular
-    mulBook: 1, // ha recalcular 
-    mulItem: 1, // ha recalcular
-    type: null,
-    level: 1,
-  };
-  availableEnchantList = ENCHANT_LIST;
-  enchantList = ENCHANT_LIST;
+  canAddAnother = true;
+  availableEnchantList: Enchant[] = [].concat(ENCHANT_LIST);
+  availableEnchantTypes: EnchantType[] = ENCHANT_LIST.map(el => el.type);
 
   constructor() { }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.processAvailables();
     this.deleteConflicts();
+    this.canAddAnother = !!this.availableEnchantList.length;
   }
 
   ngOnInit(): void {
+    this.processAvailables();
     this.deleteConflicts();
+    console.log(this.enchant, this.conflictEnchantTypes);
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value))
+    );
   }
 
-  enchantTypeChange() {
-    if (!!this.currentSelected && this.currentSelected.type != null) {
-      console.log(this.availableEnchantList);
-      const found = this.availableEnchantList.find(el => el.type == this.currentSelected.type);
-      console.log(found);
-      this.currentSelected.max = found.max;
-      this.currentSelected.mulBook = found.mulBook;
-      this.currentSelected.mulItem = found.mulItem;
-      this.currentSelected.level = this.currentSelected.max;
-    }
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.availableEnchantList.filter(option => option.type.toLowerCase().indexOf(filterValue) >= 0).map(el => el.type);
+  }
+
+  enchantTypeChange(i: number, enchant: Enchant) {
+    console.log(this.availableEnchantList);
     this.deleteConflicts();
+    this.processAvailables();
   }
 
   addEnchantButton(): void {
-    if (this.currentSelected.type != null) {
-      if (this.isCompatible(this.enchant.enchants, this.currentSelected.type)) {
-        this.enchant.enchants = this.enchant.enchants.filter(el => el.type !== this.currentSelected.type);
-        this.enchant.enchants.push({...this.currentSelected})
-        this.addEnchant.emit(this.currentSelected.type);
-        return;
-      } else {
-        console.log('Conflict adding: ' + this.currentSelected.type);
-      }
+    if (this.isCompatible(this.enchant.enchants)) {
+      this.enchant.enchants.push({...this.availableEnchantList[0], level: this.availableEnchantList[0].max});
+      this.processAvailables();
+      this.addEnchant.emit(this.enchant.enchants[this.enchant.enchants.length - 1].type);
+    } else {
+      console.log('Conflict adding: ' + this.enchant.enchants[this.enchant.enchants.length - 1].type);
     }
     this.deleteConflicts();
   } 
 
-  isCompatible(enchants: Enchant[], type: EnchantType): boolean {
+  isCompatible(enchantsParam: Enchant[]): boolean {
+    if (enchantsParam.length < 2) return true;
+    const enchants = enchantsParam.filter((el, index) => index != enchantsParam.length - 1);
+    const type = enchantsParam[enchantsParam.length - 1].type;
     let foundConflict = false;
-    CONFLICT_ENCHANT.map(el => !!el.find(el2 => el2 === type) ? foundConflict = foundConflict || this.anyInCommon(el, enchants) : null);
+    CONFLICT_ENCHANT.map(el=> !!el.find(el2 => el2 === type) ? foundConflict = foundConflict || this.anyInCommon(el, enchants) : null);
     this.conflictEnchantTypes.map(el => el == type ? foundConflict = true : null);
     return !foundConflict;
   }
@@ -99,19 +103,36 @@ export class EnchantedBookComponent implements OnInit, OnChanges {
 
   removeEnchantButton(enchant: Enchant): void {
     this.enchant.enchants = this.enchant.enchants.filter(el => el.type != enchant.type);
+    this.processAvailables();
     this.deleteConflicts();
     this.removeEnchant.emit(enchant.type);
   }
 
-  deleteConflicts() {
-    this.enchant.enchants = this.enchant.enchants.filter(el => !!this.conflictEnchantTypes.find(el2 => el.type == el2));
+  processAvailables() {
     this.availableEnchantList = ENCHANT_LIST.filter(el => !!APPLICABLE_ENCHANT.get(this.enchant.type).find(el2 => el.type == el2));
+    CONFLICT_ENCHANT.map(incompatibleList => incompatibleList.map(typeWithIncompatibilities => {
+      if (!!this.enchant.enchants.find(el => el.type == typeWithIncompatibilities)) {
+        console.log('Encontrada incompatibilidad: ', typeWithIncompatibilities, this.enchant.enchants);
+        console.log('Lista de availables antes: ', JSON.stringify(this.availableEnchantList));
+        this.availableEnchantList = this.availableEnchantList.filter(available => !incompatibleList.find(inComp => inComp == available.type) || available.type == typeWithIncompatibilities)
+        console.log('Lista de availables despues: ', this.availableEnchantList);
+      }
+    }))
     this.availableEnchantList = this.availableEnchantList.filter(el => !this.conflictEnchantTypes.find(el2 => el.type == el2));
     this.availableEnchantList = this.availableEnchantList.filter(el => !!this.isCompatibleType(this.conflictEnchantTypes, el.type));
+    this.availableEnchantList = this.availableEnchantList.filter(el => !this.enchant.enchants.find(el2 => el.type == el2.type));
+    this.availableEnchantTypes = this.availableEnchantList.map(el => el.type);
+    this.canAddAnother = !!this.availableEnchantList.length;
+  }
+
+  deleteConflicts() {
+    console.log("before delete: ", JSON.stringify(this.enchant.enchants))
+    this.enchant.enchants = this.enchant.enchants.filter(el => !this.conflictEnchantTypes.find(el2 => el.type == el2));
+    console.log("after delete: ", JSON.stringify(this.enchant.enchants))
     // console.log(this.conflictEnchantTypes);
     // console.log(this.availableEnchantList);
-    this.enchantList = this.enchantList.filter(el => !this.conflictEnchantTypes.find(el2 => el.type == el2));
-    this.enchantList = this.enchantList.filter(el => !!this.isCompatibleType(this.conflictEnchantTypes, el.type));
+    // this.enchantList = this.enchantList.filter(el => !this.conflictEnchantTypes.find(el2 => el.type == el2));
+    // this.enchantList = this.enchantList.filter(el => !!this.isCompatibleType(this.conflictEnchantTypes, el.type));
   }
 
 }

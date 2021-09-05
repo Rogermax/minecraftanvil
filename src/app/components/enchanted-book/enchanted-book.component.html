@@ -1,28 +1,18 @@
-<ng-container *ngIf="enchant">
-    <div class="container">
-        <span class="left big-text">{{enchant.type}}</span>
-        <span class="right"><label>Prior Work Penalty</label><input id="target_penalty" type="number" placeholder="0"
-                [(ngModel)]="enchant.penalty" min="0" max="6" /></span>
-    </div>
-    <div class="container type">
-        <select class="big-text" [(ngModel)]="currentSelected.type" (ngModelChange)="enchantTypeChange()">
-            <option [value]="enchant.type" *ngFor="let enchant of availableEnchantList">
-                {{enchant.type}}</option>
-        </select>
-        <input class="enchant_lv" type="number" *ngIf="currentSelected.type != null" [(ngModel)]="currentSelected.level"
-            min="1" [max]="currentSelected.max">
-    </div>
-    <div class="container ">
-        <button [disabled]="!currentSelected" class="addEnchantBtn" (click)="addEnchantButton()">
-            Add Enchantment
-        </button>
-    </div>
-
-    <div class="container enchant">
-        <div *ngFor="let enchant of enchant.enchants; let i = index" class="container type">
-            <input disabled class="enchant_name" [value]="enchant.type">
-            <input disabled class="enchant_lv" [value]="enchant.level" />
-            <button class="enchant_remove removeEnchantBtn" (click)="removeEnchantButton(enchant)">X</button>
-        </div>
-    </div>
+<ng-container>
+    <mat-card>
+        <mat-card-title>{{enchant.type}}</mat-card-title>
+        <mat-card-content>
+            <mat-form-field class="d-block w-40 ml-auto">
+                <input matInput type="number" placeholder="Prior Work Penalty" [(ngModel)]="enchant.penalty" min="0" max="31">
+            </mat-form-field>
+            <div *ngFor="let enchanti of enchant.enchants; let i = index" class="type">
+                <app-enchant [enchant]="enchant.enchants[i]" (enchantChange)="enchantTypeChange(i, $event)" (onDelete)="removeEnchantButton($event)" [validEnchants]="availableEnchantList" [editable]="true" [deletable]="true"></app-enchant>
+            </div>
+            <div *ngIf="canAddAnother" class="d-flex cursor-pointer" (click)="addEnchantButton()">
+                <mat-icon class="d-block ml-2" [color]="'primary'">add_box</mat-icon>
+                <span class="d-block mt-1 ml-2">Add Enchantment</span>
+            </div>
+        </mat-card-content>
+    </mat-card>
 </ng-container>
+
