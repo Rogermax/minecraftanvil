@@ -28,7 +28,7 @@ export class EnchantedBookComponent implements OnInit, OnChanges {
   filteredOptions: Observable<string[]>;
 
   canAddAnother = true;
-  availableEnchantList: Enchant[] = [].concat(ENCHANT_LIST);
+  availableEnchantList: Enchant[] = ENCHANT_LIST.map(el => ({...el}));
   availableEnchantTypes: EnchantType[] = ENCHANT_LIST.map(el => el.type);
 
   constructor() { }

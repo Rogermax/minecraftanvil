@@ -12,12 +12,12 @@ export class PermutationCalculatorComponent implements OnInit {
 
   // Para la selección inicial de arma, armadura o herrmaienta
   public enchantTypes: EnchantableType[] = ENCHANT_TYPES.filter(el => el != EnchantableType.Book);
+
   // Tool, armor or weapon donde se aplica
   public currentSelectedType = EnchantableType.Sword;
   
   // Cada uno de los encantables: Chestplate, book, book,...
   public enchantElements: Enchantable[] = []
-
 
   // Para cada encantable, los que no puede mostrar.
   conflictEnchantTypes: EnchantType[][] = [];
@@ -46,6 +46,7 @@ export class PermutationCalculatorComponent implements OnInit {
     if (this.enchantElements.length == 1) {
       this.removeBookLiteral = "Remove Tool/Armor/Weapon";
     }
+    this.traceEnchantsStatus();
   }
 
   addElement() {
@@ -75,6 +76,12 @@ export class PermutationCalculatorComponent implements OnInit {
         type: EnchantableType.Book
       })
     }
+    this.traceEnchantsStatus();
+  }
+
+  traceEnchantsStatus() {
+    console.log('enchantElements', JSON.stringify(this.enchantElements));
+    console.log('conflictEnchantTypes', JSON.stringify(this.conflictEnchantTypes));
   }
 
   findBestCombination() {
@@ -84,13 +91,19 @@ export class PermutationCalculatorComponent implements OnInit {
   addEnchant(index: number, enchant: EnchantType) {
     console.log('Añaden encantamiento ' +  enchant + '[' + index  +']');
     console.log('conflicts ', JSON.stringify(this.conflictEnchantTypes));
-    this.conflictEnchantTypes.map((el, i) => {
-      if (i != index && !el.includes(enchant)) {
+    let found = false;
+    this.conflictEnchantTypes.map((listaEnchants, i) => {
+      if (i != index && !listaEnchants.find(en => en == enchant)) {
+        found = true;
         this.conflictEnchantTypes[i].push(enchant)
         this.conflictEnchantTypes[i] = [].concat(this.conflictEnchantTypes[i]);
       }
     })
-    console.log(this.conflictEnchantTypes);
+    if (!found) {
+      this.conflictEnchantTypes[index].push(enchant);
+      this.conflictEnchantTypes[index] = [].concat(this.conflictEnchantTypes[index]);
+    }
+    this.traceEnchantsStatus();
   }
 
   removeEnchant(index: number, enchant: EnchantType) {
@@ -98,7 +111,7 @@ export class PermutationCalculatorComponent implements OnInit {
     this.conflictEnchantTypes.map((el, i) => {
       this.conflictEnchantTypes[i] = el.filter(el => el != enchant);
     });
-    console.log(this.conflictEnchantTypes);
+    this.traceEnchantsStatus();
   }
 
 

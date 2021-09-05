@@ -12,7 +12,7 @@
             <button class="findCost big" (click)="removeElement()">{{removeBookLiteral}}</button>
         </div>
         <div *ngIf="!removeBookLiteral" class="container">
-            <select class="big-text" [(ngModel)]="currentSelectedType" (ngModelChange)="enchantTypeChange()">
+            <select class="big-text" [(ngModel)]="currentSelectedType">
                 <option [value]="enchantype" *ngFor="let enchantype of enchantTypes">
                     {{enchantype}}</option>
             </select>
