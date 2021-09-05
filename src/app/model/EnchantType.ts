@@ -6,7 +6,7 @@ export enum EnchantType {
     Chopping = 'Chopping',
     Curse_Of_Binding = 'Curse of Binding',
     Curse_Of_Vanishing = 'Curse of Vanishing',
-    Item_Destroyed_On_Death_ = 'Item destroyed on death.',
+    Item_Destroyed_On_Death = 'Item destroyed on death.',
     Depth_Strider = 'Depth Strider',
     Efficiency = 'Efficiency',
     Feather_Falling = 'Feather Falling',
@@ -39,50 +39,4 @@ export enum EnchantType {
     Sweeping_Edge = 'Sweeping Edge',
     Thorns = 'Thorns',
     Unbreaking = 'Unbreaking',
-}
-
-export enum EnchantableType {
-    Sword = 'Sword',
-    Axe = 'Axe',
-    Pickaxe = 'Pickaxe',
-    Shovel = 'Shovel',
-    Helmet = 'Helmet',
-    Chestplate = 'Chestplate',
-    Leggings = 'Leggings',
-    Boots = 'Boots',
-    Bow = 'Bow',
-    Crossbow = 'Crossbow',
-    Trident = 'Trident',
-    Fishing_Rod = 'Fishing Rod',
-    Book = 'Book',
-}
-
-export interface Enchant {
-    type: EnchantType
-    level?: number;
-    max: number;
-    mulItem: number;
-    mulBook: number;
-}
-
-export interface Book {
-}
-
-export interface Enchantable {
-    type: EnchantableType
-    penalty: number;
-    isEnchanted: boolean;
-    enchants: Enchant[];
-}
-
-export interface EnchantableWithCost {
-    cost: number, 
-    totalCost: number;
-    maxCost: number;
-    enchant: Enchantable;
-    children?: [EnchantableWithCost, EnchantableWithCost]
-}
-
-export interface EnchantedBook extends Book, Enchantable {
-
 }

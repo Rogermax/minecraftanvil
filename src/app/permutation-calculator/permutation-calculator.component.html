@@ -1,31 +1,45 @@
 <div class="d-flex">
-    <ng-container *ngFor="let enchantElement of enchantElements; let i = index">
-        <div class="section full-width bgcolor" id="target">
-            <app-enchanted-book [enchant]="enchantElement" [conflictEnchantTypes]="conflictEnchantTypes[i]" (addEnchant)="addEnchant(i, $event)" (removeEnchant)="removeEnchant(i, $event)"></app-enchanted-book>
-        </div>
-    </ng-container>
-    <div class="section">
-        <div class="container">
-            <button class="findCost big" (click)="addElement()">{{addBookLiteral}}</button>
-        </div>
-        <div *ngIf="!!removeBookLiteral" class="container">
-            <button class="findCost big" (click)="removeElement()">{{removeBookLiteral}}</button>
-        </div>
-        <div *ngIf="!removeBookLiteral" class="container">
-            <select class="big-text" [(ngModel)]="currentSelectedType">
-                <option [value]="enchantype" *ngFor="let enchantype of enchantTypes">
-                    {{enchantype}}</option>
-            </select>
-        </div>
+  <ng-container *ngFor="let enchantElement of enchantElements; let i = index">
+    <div class="section full-width bgcolor" id="target">
+      <app-enchanted-book
+        [enchant]="enchantElement"
+        [conflictEnchantTypes]="conflictEnchantTypes[i]"
+        (addEnchant)="addEnchant(i, $event)"
+        (removeEnchant)="removeEnchant(i, $event)"
+      ></app-enchanted-book>
     </div>
+  </ng-container>
+  <div class="section">
+    <div class="container">
+      <button mat-button class="findCost big" (click)="addElement()">
+        {{ addBookLiteral }}
+      </button>
+    </div>
+    <div *ngIf="!!removeBookLiteral" class="container">
+      <button mat-button class="findCost big" (click)="removeElement()">
+        {{ removeBookLiteral }}
+      </button>
+    </div>
+    <div *ngIf="!removeBookLiteral" class="container">
+      <select class="big-text" [(ngModel)]="currentSelectedType">
+        <option [value]="enchantype" *ngFor="let enchantype of enchantTypes">
+          {{ enchantype }}
+        </option>
+      </select>
+    </div>
+  </div>
 </div>
 <div class="container">
-    <button mat-button [color]="'primary'" (click)="findBestCombination()">Find Best Combination</button>
+  <button mat-button [color]="'primary'" (click)="findBestCombination()">
+    Find Best Combination
+  </button>
 </div>
 <div class="section center">
-    <h2 id="total_cost">Total Cost: {{totalCost}}</h2>
-    <p id="result_tool"></p>
+  <h2 id="total_cost">Total Cost: {{ totalCost }}</h2>
+  <p id="result_tool"></p>
 </div>
 <footer>
-    <textarea readonly rows="6" id="log" placeholder="Log Text">{{logText}}</textarea>
+  <textarea readonly rows="6" id="log" placeholder="Log Text">{{
+    logText
+  }}</textarea>
 </footer>

@@ -1,29 +1,24 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Enchant, EnchantType } from 'src/app/models/enchanted.book';
-import { Observable } from 'rxjs';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Enchant } from 'src/app/model/Enchant';
 
 @Component({
   selector: 'app-enchant',
   templateUrl: './enchant.component.html',
   styleUrls: ['./enchant.component.scss']
 })
-export class EnchantComponent implements OnInit {
-
-  @Input() enchant: Enchant = null;
-  @Input() editable: boolean = true;
-  @Input() deletable: boolean = false;
+export class EnchantComponent {
+  @Input() enchant!: Enchant;
+  @Input() editable = true;
+  @Input() deletable = false;
   @Input() validEnchants: Enchant[] = [];
 
   @Output() enchantChange: EventEmitter<Enchant> = new EventEmitter<Enchant>();
   @Output() onDelete: EventEmitter<Enchant> = new EventEmitter<Enchant>();
 
-  constructor() { }
-
-  ngOnInit(): void {}
-
   validToEdit(): boolean {
-    if (this.enchant == null || !this.enchant.level || !this.enchant.type) return false;
-    return !!this.validEnchants.find(el => el.type == this.enchant.type);
+    if (this.enchant == null || !this.enchant.level || !this.enchant.type)
+      return false;
+    return !!this.validEnchants.find((el) => el.type == this.enchant.type);
   }
 
   delete(): void {
@@ -31,7 +26,7 @@ export class EnchantComponent implements OnInit {
   }
 
   changeType(): void {
-    const found = this.validEnchants.find(el => el.type == this.enchant.type);
+    const found = this.validEnchants.find((el) => el.type == this.enchant.type);
     if (!found) return;
     this.enchant.max = found.max;
     this.enchant.mulBook = found.mulBook;
@@ -43,12 +38,10 @@ export class EnchantComponent implements OnInit {
     }
   }
 
-  
   changeLevel(): void {
     if (this.validToEdit()) {
       console.log('Cambio de enchant', this.enchant);
       this.enchantChange.emit(this.enchant);
     }
   }
-
 }

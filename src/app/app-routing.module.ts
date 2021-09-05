@@ -5,10 +5,8 @@ import { PermutationCalculatorComponent } from './permutation-calculator/permuta
 const routes: Routes = [
   { path: '', component: PermutationCalculatorComponent }
 ];
-
-
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

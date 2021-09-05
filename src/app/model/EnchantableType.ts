@@ -1,0 +1,15 @@
+export enum EnchantableType {
+    Sword = 'Sword',
+    Axe = 'Axe',
+    Pickaxe = 'Pickaxe',
+    Shovel = 'Shovel',
+    Helmet = 'Helmet',
+    Chestplate = 'Chestplate',
+    Leggings = 'Leggings',
+    Boots = 'Boots',
+    Bow = 'Bow',
+    Crossbow = 'Crossbow',
+    Trident = 'Trident',
+    Fishing_Rod = 'Fishing Rod',
+    Book = 'Book',
+}

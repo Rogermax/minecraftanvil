@@ -1,4 +1,8 @@
-import { EnchantType, Enchant, EnchantableType, Enchantable } from "../models/enchanted.book";
+import { Enchant } from '../model/Enchant';
+import { Enchantable } from '../model/Enchantable';
+import { EnchantableType } from '../model/EnchantableType';
+import { EnchantType } from '../model/EnchantType';
+
 
 export const ENCHANT_TYPES: EnchantableType[] = [
     EnchantableType.Sword,
