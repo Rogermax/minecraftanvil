@@ -1,7 +1,7 @@
-import { Enchant } from '../model/Enchant';
-import { Enchantable } from '../model/Enchantable';
-import { EnchantableType } from '../model/EnchantableType';
-import { EnchantableWithCost } from '../model/EnchantableWithCost';
+import { Enchant } from '../models/Enchant';
+import { Enchantable } from '../models/Enchantable';
+import { EnchantableType } from '../models/EnchantableType';
+import { EnchantableWithCost } from '../models/EnchantableWithCost';
 
 export let totalCost = 0;
 export let totalForges = 0;

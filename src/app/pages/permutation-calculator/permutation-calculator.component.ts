@@ -3,11 +3,11 @@ import {
   ENCHANT_LIST,
   APPLICABLE_ENCHANT,
   ENCHANT_TYPES
-} from '../db/enchants';
-import { Enchantable } from '../model/Enchantable';
-import { EnchantableType } from '../model/EnchantableType';
-import { EnchantType } from '../model/EnchantType';
-import { findBestCombination as findBesty } from '../utils/Cost.utils';
+} from '../../db/enchants';
+import { Enchantable } from '../../models/Enchantable';
+import { EnchantableType } from '../../models/EnchantableType';
+import { EnchantType } from '../../models/EnchantType';
+import { findBestCombination as findBesty } from '../../utils/Cost.utils';
 
 @Component({
   selector: 'app-permutation-calculator',

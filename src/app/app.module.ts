@@ -18,7 +18,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { EnchantedBookComponent } from './components/enchanted-book/enchanted-book.component';
-import { PermutationCalculatorComponent } from './permutation-calculator/permutation-calculator.component';
+import { PermutationCalculatorComponent } from './pages/permutation-calculator/permutation-calculator.component';
 import { EnchantComponent } from './components/enchant/enchant.component';
 
 @NgModule({

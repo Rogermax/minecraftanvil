@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Enchant } from 'src/app/model/Enchant';
+import { Enchant } from 'src/app/models/Enchant';
 
 @Component({
   selector: 'app-enchant',

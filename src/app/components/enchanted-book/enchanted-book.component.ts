@@ -15,10 +15,10 @@ import {
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
-import { Enchant } from 'src/app/model/Enchant';
-import { Enchantable } from 'src/app/model/Enchantable';
-import { EnchantableType } from 'src/app/model/EnchantableType';
-import { EnchantType } from 'src/app/model/EnchantType';
+import { Enchant } from 'src/app/models/Enchant';
+import { Enchantable } from 'src/app/models/Enchantable';
+import { EnchantableType } from 'src/app/models/EnchantableType';
+import { EnchantType } from 'src/app/models/EnchantType';
 
 @Component({
   selector: 'app-enchanted-book',
