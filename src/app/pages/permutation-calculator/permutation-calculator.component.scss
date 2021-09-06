@@ -1,0 +1,37 @@
+.dragdrop {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 1rem;
+  user-select: none;
+  width: 42%;
+  margin-left: 4%;
+  flex-direction: column;
+}
+
+.book {
+  width: 50px;
+  height: 50px;
+  padding-left: 0.5rem;
+}
+
+.pair {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  span {
+    margin-left: 1rem;
+  }
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+}
+
+.center {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  justify-content: center;
+  user-select: none;
+}
+
+textarea {
+  width: 80%;
+}

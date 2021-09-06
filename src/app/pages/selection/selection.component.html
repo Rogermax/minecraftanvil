@@ -1,0 +1,14 @@
+<div class="d-flex center">
+  <div class="d-flex four">
+    <div *ngFor="let item of items">
+      <button mat-button (click)="navigate(item.name)">
+        <img
+          width="100"
+          [title]="item.name"
+          [alt]="item.name"
+          [src]="item.src"
+        />
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,12 +1,87 @@
+<div class="d-flex w-100 center">
+  <div>
+    <img width="100" [title]="item.name" [alt]="item.name" [src]="item.src" />
+  </div>
+</div>
+<div class="d-flex">
+  <div
+    class="d-flex dragdrop"
+    cdkDropList
+    #todoList="cdkDropList"
+    [cdkDropListData]="availableEnchantList"
+    [cdkDropListConnectedTo]="[doneList]"
+    (cdkDropListDropped)="drop($event)"
+  >
+    <div
+      *ngFor="let enchant of availableEnchantList"
+      [cdkDragDisabled]="enchant.disabled"
+      cdkDrag
+      class="pair"
+    >
+      <img
+        class="book"
+        [title]="enchant.type"
+        [alt]="enchant.type"
+        [src]="
+          enchant.disabled
+            ? 'assets/Book_JE2_BE2.png'
+            : 'assets/EnchantedBookNew.gif'
+        "
+      />
+      <span>{{
+        enchant.type + ' ' + toRoman(enchant.level, enchant.max)
+      }}</span>
+    </div>
+  </div>
+  <div
+    class="d-flex dragdrop"
+    cdkDropList
+    #doneList="cdkDropList"
+    [cdkDropListData]="enchantList"
+    [cdkDropListConnectedTo]="[todoList]"
+    (cdkDropListDropped)="dropGood($event)"
+  >
+    <div *ngFor="let enchant of enchantList" cdkDrag class="pair">
+      <img
+        class="book"
+        [title]="enchant.type"
+        [alt]="enchant.type"
+        src="assets/EnchantedBookNew.gif"
+      />
+      <span>{{
+        enchant.type + ' ' + toRoman(enchant.level, enchant.max)
+      }}</span>
+    </div>
+  </div>
+</div>
+<div class="d-flex w-100 center">
+  <button mat-raised-button color="accent" (click)="findBestCombinationNew()">
+    Find Best Combination
+  </button>
+</div>
+<div class="d-flex w-100 center">
+  <textarea readonly rows="12" id="log" placeholder="Log Text">{{
+    logText
+  }}</textarea>
+</div>
+<!--
 <div class="d-flex">
   <ng-container *ngFor="let enchantElement of enchantElements; let i = index">
     <div class="section full-width bgcolor" id="target">
       <app-enchanted-book
-        [enchant]="enchantElement"
-        [conflictEnchantTypes]="conflictEnchantTypes[i]"
-        (addEnchant)="addEnchant(i, $event)"
+        [enchantable]="enchantElement"
         (removeEnchant)="removeEnchant(i, $event)"
+        (onEnchantTypeChange)="enchantTypeChange(i, $event)"
+        (onEnchantLevelChange)="enchantLevelChange(i, $event)"
       ></app-enchanted-book>
+      <div
+        *ngIf="availableEnchantList.length > 0"
+        class="d-flex cursor-pointer"
+        (click)="addEnchantButton(i)"
+      >
+        <mat-icon class="d-block ml-2">add_box</mat-icon>
+        <span class="d-block mt-1 ml-2">Add Enchantment</span>
+      </div>
     </div>
   </ng-container>
   <div class="section">
@@ -29,15 +104,11 @@
     </div>
   </div>
 </div>
-<div class="container">
-  <button mat-button (click)="findBestCombination()">
-    Find Best Combination
-  </button>
-</div>
 <div class="section center">
   <h2 id="total_cost">Total Cost: {{ totalCost }}</h2>
   <p id="result_tool"></p>
 </div>
+-->
 <!--
 <footer>
   <textarea readonly rows="6" id="log" placeholder="Log Text">{{

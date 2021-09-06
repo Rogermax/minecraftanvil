@@ -1,38 +1,34 @@
-<ng-container>
-  <mat-card>
-    <mat-card-title>{{ enchant.type }}</mat-card-title>
-    <mat-card-content>
-      <mat-form-field class="d-block w-40 ml-auto">
-        <input
-          matInput
-          type="number"
-          placeholder="Prior Work Penalty"
-          [(ngModel)]="enchant.penalty"
-          min="0"
-          max="31"
-        />
-      </mat-form-field>
-      <div
-        *ngFor="let enchanti of enchant.enchants; let i = index"
-        class="type"
-      >
-        <app-enchant
-          [enchant]="enchant.enchants[i]"
-          (enchantChange)="enchantTypeChange()"
-          (onDelete)="removeEnchantButton($event)"
-          [validEnchants]="availableEnchantList"
-          [editable]="true"
-          [deletable]="true"
-        ></app-enchant>
-      </div>
-      <div
-        *ngIf="canAddAnother"
-        class="d-flex cursor-pointer"
-        (click)="addEnchantButton()"
-      >
-        <mat-icon class="d-block ml-2">add_box</mat-icon>
-        <span class="d-block mt-1 ml-2">Add Enchantment</span>
-      </div>
-    </mat-card-content>
-  </mat-card>
-</ng-container>
+<img
+  title="Simte V"
+  width="50"
+  alt="Enchanted Book"
+  src="assets/EnchantedBookNew.gif"
+/>
+<mat-card>
+  <mat-card-title>{{ enchantable.type }}</mat-card-title>
+  <mat-card-content>
+    <mat-form-field class="d-block w-40 ml-auto">
+      <input
+        matInput
+        type="number"
+        placeholder="Prior Work Penalty"
+        [(ngModel)]="enchantable.penalty"
+        min="0"
+        max="31"
+      />
+    </mat-form-field>
+    <div
+      *ngFor="let enchanti of enchantable.enchants; let i = index"
+      class="type"
+    >
+      <app-enchant
+        [enchant]="enchantable.enchants[i]"
+        (onRemove)="removeEnchantButton($event)"
+        (onEnchantTypeChange)="changeType(i, $event)"
+        (onEnchantLevelChange)="changeLevel(i, $event)"
+        [validEnchants]="availableEnchantList"
+        [removable]="true"
+      ></app-enchant>
+    </div>
+  </mat-card-content>
+</mat-card>

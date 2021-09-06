@@ -16,7 +16,15 @@ export const ENCHANT_TYPES: EnchantableType[] = [
   EnchantableType.Crossbow,
   EnchantableType.Trident,
   EnchantableType.Fishing_Rod,
-  EnchantableType.Book
+  EnchantableType.Book,
+  EnchantableType.Carrot_on_a_Stick,
+  EnchantableType.Elytra,
+  EnchantableType.Flint_and_Steel,
+  EnchantableType.Shears,
+  EnchantableType.Shield,
+  EnchantableType.Trident,
+  EnchantableType.Turtle_Shell,
+  EnchantableType.Warped_Fungus_on_a_Stick
 ];
 
 export const CONFLICT_ENCHANT: EnchantType[][] = [
@@ -144,6 +152,7 @@ export const APPLICABLE_ENCHANT: Map<EnchantableType, EnchantType[]> = new Map([
       EnchantType.Thorns,
       EnchantType.Unbreaking,
       EnchantType.Mending,
+      EnchantType.Soul_Speed,
       EnchantType.Curse_Of_Binding,
       EnchantType.Curse_Of_Vanishing
     ]
@@ -184,10 +193,87 @@ export const APPLICABLE_ENCHANT: Map<EnchantableType, EnchantType[]> = new Map([
     ]
   ],
   [
+    EnchantableType.Elytra,
+    [
+      EnchantType.Unbreaking,
+      EnchantType.Mending,
+      EnchantType.Curse_Of_Binding,
+      EnchantType.Curse_Of_Vanishing
+    ]
+  ],
+  [
+    EnchantableType.Shield,
+    [
+      EnchantType.Unbreaking,
+      EnchantType.Mending,
+      EnchantType.Curse_Of_Vanishing
+    ]
+  ],
+  [
+    EnchantableType.Shears,
+    [
+      EnchantType.Efficiency,
+      EnchantType.Unbreaking,
+      EnchantType.Mending,
+      EnchantType.Curse_Of_Vanishing
+    ]
+  ],
+  [
+    EnchantableType.Turtle_Shell,
+    [
+      EnchantType.Protection,
+      EnchantType.Fire_Protection,
+      EnchantType.Projectile_Protection,
+      EnchantType.Blast_Protection,
+      EnchantType.Respiration,
+      EnchantType.Aqua_Affinity,
+      EnchantType.Thorns,
+      EnchantType.Unbreaking,
+      EnchantType.Mending,
+      EnchantType.Curse_Of_Binding,
+      EnchantType.Curse_Of_Vanishing
+    ]
+  ],
+  [
+    EnchantableType.Hoe,
+    [
+      EnchantType.Efficiency,
+      EnchantType.Fortune,
+      EnchantType.Silk_Touch,
+      EnchantType.Unbreaking,
+      EnchantType.Mending,
+      EnchantType.Curse_Of_Vanishing
+    ]
+  ],
+  [
+    EnchantableType.Flint_and_Steel,
+    [
+      EnchantType.Unbreaking,
+      EnchantType.Mending,
+      EnchantType.Curse_Of_Vanishing
+    ]
+  ],
+  [
     EnchantableType.Fishing_Rod,
     [
       EnchantType.Lure,
       EnchantType.Luck_Of_The_Sea,
+      EnchantType.Unbreaking,
+      EnchantType.Mending,
+      EnchantType.Curse_Of_Vanishing
+    ]
+  ],
+  [
+    EnchantableType.Carrot_on_a_Stick,
+    [
+      EnchantType.Unbreaking,
+      EnchantType.Mending,
+      EnchantType.Curse_Of_Vanishing
+    ]
+  ],
+  [
+    EnchantableType.Warped_Fungus_on_a_Stick,
+    [
       EnchantType.Unbreaking,
       EnchantType.Mending,
       EnchantType.Curse_Of_Vanishing
@@ -459,6 +545,12 @@ export const ENCHANT_LIST: Enchant[] = [
     max: 3,
     mulItem: 4,
     mulBook: 2
+  },
+  {
+    type: EnchantType.Soul_Speed,
+    max: 3,
+    mulItem: 1,
+    mulBook: 1
   }
 ];
 
@@ -506,7 +598,6 @@ export const PERFECT_HELMET_ENCHANTABLES: Enchantable[] = [
     penalty: 0,
     type: EnchantableType.Book
   },
-
   {
     enchants: [
       {
@@ -521,7 +612,6 @@ export const PERFECT_HELMET_ENCHANTABLES: Enchantable[] = [
     penalty: 0,
     type: EnchantableType.Book
   },
-
   {
     enchants: [
       {

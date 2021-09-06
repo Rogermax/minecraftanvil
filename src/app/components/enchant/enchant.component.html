@@ -1,28 +1,46 @@
-<mat-card-content *ngIf="!!enchant">
-    <mat-form-field class="pr-3 w-70">
-        <input type="text"
-            [disabled]="!editable"
-            placeholder="Enchant"
-            aria-label="Number"
-            matInput
-            [(ngModel)]="enchant.type"
-            (ngModelChange)="changeType()"
-            [matAutocomplete]="auto">
-        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-            <mat-option [value]="ench.type" *ngFor="let ench of validEnchants">{{ench.type}}</mat-option>
-        </mat-autocomplete>
-    </mat-form-field>
-    <mat-form-field class="w-20">
-        <input type="number"
-            [disabled]="!editable"
-            placeholder="Level"
-            aria-label="Number"
-            matInput
-            [(ngModel)]="enchant.level"
-            (ngModelChange)="changeLevel()"
-            min="1"
-            [max]="enchant.max"
-        >
-    </mat-form-field>
-    <mat-icon class="cursor-pointer d-inline-block w-10" *ngIf="!!deletable" [color]="'warn'" aria-hidden="false" aria-label="Remove" (click)="delete()">backspace</mat-icon>
+<mat-card-content>
+  <mat-form-field class="pr-3 w-70">
+    <input
+      matInput
+      type="text"
+      placeholder="Enchant"
+      aria-label="Number"
+      [disabled]="!!enchant"
+      [matAutocomplete]="auto"
+      [autocomplete]="'no'"
+      [name]="'enchant'"
+      [value]="!enchant ? '' : enchant.type"
+    />
+    <mat-autocomplete
+      autoActiveFirstOption
+      #auto="matAutocomplete"
+      (optionSelected)="changeType($event)"
+    >
+      <mat-option [value]="ench.type" *ngFor="let ench of validEnchants">
+        {{ ench.type }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field *ngIf="!!enchant" class="w-20">
+    <input
+      type="number"
+      placeholder="Level"
+      aria-label="Number"
+      matInput
+      (change)="changeLevel($event)"
+      min="1"
+      [max]="enchant.max"
+      [value]="!enchant ? '0' : enchant.level + ''"
+    />
+  </mat-form-field>
+  <mat-icon
+    class="cursor-pointer d-inline-block w-10"
+    *ngIf="!!removable"
+    [color]="'warn'"
+    aria-hidden="false"
+    aria-label="Remove"
+    (click)="delete()"
+  >
+    backspace
+  </mat-icon>
 </mat-card-content>

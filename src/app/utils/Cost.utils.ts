@@ -16,7 +16,31 @@ export const cache: Map<string, EnchantableWithCost> = new Map<
   EnchantableWithCost
 >();
 
-export function findBestCombination(enchantElements: Enchantable[]): void {
+export function findBestCombinationEnchant(
+  itemEnchant: EnchantableType,
+  enchantElements: Enchant[]
+): EnchantableWithCost {
+  const firstItem: Enchantable = {
+    enchants: [],
+    isEnchanted: false,
+    penalty: 0,
+    type: itemEnchant
+  };
+  return findBestCombination(
+    [firstItem].concat(
+      enchantElements.map((el) => ({
+        enchants: [el],
+        isEnchanted: true,
+        penalty: 0,
+        type: EnchantableType.Book
+      }))
+    )
+  );
+}
+
+export function findBestCombination(
+  enchantElements: Enchantable[]
+): EnchantableWithCost {
   if (enchantElements.length > 1) {
     totalCost = findCost(enchantElements[0], enchantElements[1]);
     totalForges = 0;
@@ -47,7 +71,19 @@ export function findBestCombination(enchantElements: Enchantable[]): void {
     console.log('RESULTADO FINAL: ');
     totalCost = result.totalCost;
     printEnchantableWithCost(result, 0, true);
+    return result;
   }
+  return {
+    cost: 0,
+    enchant: {
+      enchants: [],
+      isEnchanted: false,
+      penalty: 0,
+      type: EnchantableType.Book
+    },
+    maxCost: 0,
+    totalCost: 0
+  };
 }
 
 export function findBestCombinationRecursive(
@@ -392,12 +428,12 @@ export function printEnchantableWithCost(
   if (!enchant || !enchant.cost) return;
   let str = '';
   for (let i = 0; i < tabs; i++) {
-    str += '__';
+    str += '  ';
   }
   if (!enchant.enchant && trace) {
     logText +=
-      (!str ? '' : '|') +
       str +
+      (!str ? '' : '|') +
       enchant.enchant +
       '[totalCost:' +
       enchant.totalCost +
@@ -409,8 +445,8 @@ export function printEnchantableWithCost(
       printEnchantable(enchant.enchant) +
       '\n';
     console.log(
-      (!str ? '' : '|') +
-        str +
+      str +
+        (!str ? '' : '|') +
         enchant.enchant +
         '[totalCost:' +
         enchant.totalCost +
@@ -423,8 +459,8 @@ export function printEnchantableWithCost(
     );
   } else {
     logText +=
-      (!str ? '' : '|') +
       str +
+      (!str ? '' : '|') +
       enchant.enchant.type +
       '[totalCost:' +
       enchant.totalCost +
@@ -438,8 +474,8 @@ export function printEnchantableWithCost(
       printEnchantable(enchant.enchant) +
       '\n';
     console.log(
-      (!str ? '' : '|') +
-        str +
+      str +
+        (!str ? '' : '|') +
         enchant.enchant.type +
         '[totalCost:' +
         enchant.totalCost +
@@ -491,7 +527,7 @@ export function printEnchantableList(enchants: Enchantable[]): string {
 
 export function printEnchantableCost(enchant: EnchantableWithCost): string {
   if (!enchant) return '{undef}';
-  return '[' + enchant.enchant.enchants.map((el) => el.type).join(', ') + ']';
+  return '[' + enchant.enchant.enchants.map((el) => el?.type).join(', ') + ']';
 }
 
 export function forge(
@@ -526,7 +562,7 @@ export function findCost(target: Enchantable, sacrifice: Enchantable): number {
 
 function printEnchantable(enchant: Enchantable): string {
   if (!enchant) return '{undef}';
-  return '[' + enchant.enchants.map((el) => el.type).join(', ') + ']';
+  return '[' + enchant.enchants.map((el) => el?.type).join(', ') + ']';
 }
 
 function getEnchantsCost(enchant: Enchantable): number {
@@ -540,10 +576,10 @@ function getEnchantsCost(enchant: Enchantable): number {
   return total;
 }
 
-function getEnchantCostOnBook(enchant: Enchant): number {
-  return !enchant.level ? 0 : enchant.level * enchant.mulBook;
+function getEnchantCostOnBook(enchant: Enchant | null): number {
+  return !enchant || !enchant.level ? 0 : enchant.level * enchant.mulBook;
 }
 
-function getEnchantCost(enchant: Enchant): number {
-  return !enchant.level ? 0 : enchant.level * enchant.mulItem;
+function getEnchantCost(enchant: Enchant | null): number {
+  return !enchant || !enchant.level ? 0 : enchant.level * enchant.mulItem;
 }

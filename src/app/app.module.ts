@@ -13,6 +13,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
 
 import { LayoutModule } from '@angular/cdk/layout';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,13 +21,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EnchantedBookComponent } from './components/enchanted-book/enchanted-book.component';
 import { PermutationCalculatorComponent } from './pages/permutation-calculator/permutation-calculator.component';
 import { EnchantComponent } from './components/enchant/enchant.component';
+import { SelectionComponent } from './pages/selection/selection.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EnchantedBookComponent,
     PermutationCalculatorComponent,
-    EnchantComponent
+    EnchantComponent,
+    SelectionComponent
   ],
   imports: [
     BrowserModule,
@@ -35,6 +38,7 @@ import { EnchantComponent } from './components/enchant/enchant.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     LayoutModule,
+    DragDropModule,
     MatIconModule,
     MatToolbarModule,
     MatSelectModule,
